@@ -39,3 +39,99 @@ def delete_task(request, id):
     task.is_deleted = True
     task.save()
     return redirect('home')
+
+# ---------------- Category ----------------
+
+from .models import Category
+from .forms import CategoryForm
+
+
+def category_list(request):
+    categories = Category.objects.all().order_by('-id')
+    return render(request, 'tasks/category_list.html', {
+        'categories': categories
+    })
+
+
+def category_add(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm()
+
+    return render(request, 'tasks/category_form.html', {
+        'form': form
+    })
+
+
+def category_edit(request, id):
+    category = get_object_or_404(Category, id=id)
+
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            return redirect('category_list')
+    else:
+        form = CategoryForm(instance=category)
+
+    return render(request, 'tasks/category_form.html', {
+        'form': form
+    })
+
+
+def category_delete(request, id):
+    category = get_object_or_404(Category, id=id)
+    category.delete()
+    return redirect('category_list')
+
+# ---------------- Sub Category ----------------
+
+from .models import SubCategory
+from .forms import SubCategoryForm
+
+
+def subcategory_list(request):
+    subcategories = SubCategory.objects.all().order_by('-id')
+    return render(request, 'tasks/subcategory_list.html', {
+        'subcategories': subcategories
+    })
+
+
+def subcategory_add(request):
+    if request.method == "POST":
+        form = SubCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('subcategory_list')
+    else:
+        form = SubCategoryForm()
+
+    return render(request, 'tasks/subcategory_form.html', {
+        'form': form
+    })
+
+
+def subcategory_edit(request, id):
+    subcategory = get_object_or_404(SubCategory, id=id)
+
+    if request.method == "POST":
+        form = SubCategoryForm(request.POST, instance=subcategory)
+        if form.is_valid():
+            form.save()
+            return redirect('subcategory_list')
+    else:
+        form = SubCategoryForm(instance=subcategory)
+
+    return render(request, 'tasks/subcategory_form.html', {
+        'form': form
+    })
+
+
+def subcategory_delete(request, id):
+    subcategory = get_object_or_404(SubCategory, id=id)
+    subcategory.delete()
+    return redirect('subcategory_list')

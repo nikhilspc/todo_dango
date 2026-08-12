@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sub Categories</title>
+</head>
+<body>
+
+<h1>Sub Categories</h1>
+
+<a href="{% url 'subcategory_add' %}">Add Sub Category</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Name</th>
+    </tr>
+
+    {% for subcategory in subcategories %}
+    <tr>
+        <td>{{ subcategory.id }}</td>
+        <td>{{ subcategory.category.name }}</td>
+        <td>{{ subcategory.name }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
