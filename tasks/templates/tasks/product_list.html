@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Products</title>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f2f2f2;
+}
+
+table{
+    width:95%;
+    margin:auto;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    border:1px solid gray;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+}
+
+.btn{
+    padding:8px 12px;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+
+.add{
+    background:green;
+}
+
+.edit{
+    background:orange;
+}
+
+.delete{
+    background:red;
+}
+
+img{
+    width:70px;
+}
+
+.top{
+    width:95%;
+    margin:20px auto;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="top">
+
+<a class="btn add" href="{% url 'product_add' %}">+ Add Product</a>
+
+</div>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+
+<th>Category</th>
+
+<th>SubCategory</th>
+
+<th>Name</th>
+
+<th>Description</th>
+
+<th>Price</th>
+
+<th>Image</th>
+
+<th>Action</th>
+
+</tr>
+
+{% for product in products %}
+
+<tr>
+
+<td>{{ product.id }}</td>
+
+<td>{{ product.category }}</td>
+
+<td>{{ product.subcategory }}</td>
+
+<td>{{ product.name }}</td>
+
+<td>{{ product.description }}</td>
+
+<td>₹ {{ product.price }}</td>
+
+<td>
+
+{% if product.image %}
+
+<img src="{{ product.image.url }}">
+
+{% else %}
+
+No Image
+
+{% endif %}
+
+</td>
+
+<td>
+
+<a class="btn edit" href="{% url 'product_edit' product.id %}">Edit</a>
+
+<a class="btn delete" href="{% url 'product_delete' product.id %}">Delete</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

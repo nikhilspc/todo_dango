@@ -1,15 +1,14 @@
 from django import forms
-from .models import Task
+from .models import Task, Category, SubCategory, Product
 
-class TaskForm(forms.ModelForm):
+from django import forms
+from .models import Product
+
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = Task
-        fields = ['title','description','is_completed']
+        model = Product
+        fields = '__all__'
         
-
-from .models import Task, Category , SubCategory
-
-
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -20,10 +19,22 @@ class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name']
-        
-from .models import SubCategory
+
 
 class SubCategoryForm(forms.ModelForm):
     class Meta:
         model = SubCategory
         fields = ['category', 'name']
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            'category',
+            'subcategory',
+            'name',
+            'description',
+            'price',
+            'image'
+        ]

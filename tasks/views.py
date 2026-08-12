@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from .forms import TaskForm
-
+from .models import Task, Category, SubCategory, Product
+from .forms import ProductForm
 
 def home(request):
     tasks = Task.objects.filter(is_deleted=False).order_by('-id')
@@ -135,3 +136,53 @@ def subcategory_delete(request, id):
     subcategory = get_object_or_404(SubCategory, id=id)
     subcategory.delete()
     return redirect('subcategory_list')
+
+# ---------------- Product ----------------
+
+def product_list(request):
+    products = Product.objects.all().order_by('-id')
+
+    return render(request, 'tasks/product_list.html', {
+        'products': products
+    })
+
+
+def product_add(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    else:
+        form = ProductForm()
+
+    return render(request, 'tasks/product_form.html', {
+        'form': form
+    })
+
+
+def product_edit(request, id):
+    product = get_object_or_404(Product, id=id)
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product)
+
+        if form.is_valid():
+            form.save()
+            return redirect('product_list')
+
+    else:
+        form = ProductForm(instance=product)
+
+    return render(request, 'tasks/product_form.html', {
+        'form': form
+    })
+
+
+def product_delete(request, id):
+    product = get_object_or_404(Product, id=id)
+    product.delete()
+
+    return redirect('product_list')
