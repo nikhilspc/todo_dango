@@ -186,3 +186,4 @@ def product_delete(request, id):
     product.delete()
 
     return redirect('product_list')
+
