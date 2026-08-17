@@ -11,9 +11,7 @@ from .forms import (
     ProductForm
 )
 
-# ===========================
 # HOME
-# ===========================
 
 @login_required(login_url='login')
 def home(request):
@@ -26,10 +24,6 @@ def home(request):
         'tasks': tasks
     })
 
-
-# ===========================
-# TASK CRUD
-# ===========================
 
 @login_required(login_url='login')
 def add_task(request):
@@ -90,9 +84,9 @@ def delete_task(request, id):
     return redirect('home')
 
 
-# ===========================
+
 # CATEGORY CRUD
-# ===========================
+
 
 @login_required(login_url='login')
 def category_list(request):
@@ -156,9 +150,7 @@ def category_delete(request, id):
     return redirect('category_list')
 
 
-# ===========================
 # SUBCATEGORY CRUD
-# ===========================
 
 @login_required(login_url='login')
 def subcategory_list(request):
@@ -229,9 +221,8 @@ def subcategory_delete(request, id):
     return redirect('subcategory_list')
 
 
-# ===========================
+
 # PRODUCT CRUD
-# ===========================
 
 @login_required(login_url='login')
 def product_list(request):
@@ -306,9 +297,7 @@ def product_delete(request, id):
     return redirect('product_list')
 
 
-# ===========================
 # REGISTER
-# ===========================
 
 def register(request):
 
@@ -332,9 +321,8 @@ def register(request):
                   {'form': form})
 
 
-# ===========================
 # LOGIN
-# ===========================
+
 
 def user_login(request):
 
@@ -372,9 +360,8 @@ def user_login(request):
                   {'form': form})
 
 
-# ===========================
 # LOGOUT
-# ===========================
+
 
 @login_required(login_url='login')
 def user_logout(request):
