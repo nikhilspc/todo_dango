@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Task
+from .serializers import TaskSerializer
 
 from .models import Task, Category, SubCategory, Product
 from .forms import (
@@ -369,3 +373,20 @@ def user_logout(request):
     logout(request)
 
     return redirect('login')
+
+@api_view(['GET', 'POST'])
+def task_list(request):
+
+    if request.method == 'GET':
+        tasks = Task.objects.all()
+        serializer = TaskSerializer(tasks, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = TaskSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
